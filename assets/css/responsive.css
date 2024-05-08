@@ -51,6 +51,7 @@
 
   .header__topbar .container {
     justify-content: center;
+    
   }
 
   .header__topbar .container .login-btn {
@@ -77,7 +78,7 @@
 
   .nav__item .nav__anchor:hover {
     text-decoration: dashed;
-    background-color: var(--color-bg);
+    background-color: var(--color-bg-3);
   }
 
   .header__action {

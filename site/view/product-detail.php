@@ -100,7 +100,7 @@ while ($row_product_detail = mysqli_fetch_array($query_product_detail)) {
                                         }
                                     }
                                     ?>
-                                    <div class=" h5">(<?php echo $rate_avg ?>/5)</div>
+                                    <span class="point-comment h5">(<?php echo $rate_avg ?>/5)</span>
                                 </span>
                                 
                                 <div class="product-detail__price d-flex align-center">
@@ -122,8 +122,7 @@ while ($row_product_detail = mysqli_fetch_array($query_product_detail)) {
                                     ?>
                                 </div>
                                 <span class="h5 product-code">Mã sản phẩm: <?php echo $row_product_detail['product_id'] ?></span><br>
-                                <span class="h5 product-code">Số lượng còn: <?php if ($row_product_detail['product_quantity'] > 0) { ?> <span class=""> <?php echo $row_product_detail['product_quantity'] ?> </span><?php } else { ?>Hiện sản phẩm đã hết hàng<?php } ?></span>
-
+                                <span class="h5 product-code" >Số lượng còn: <?php if ($row_product_detail['product_quantity'] > 0) { ?><span class="quantity-total"> <?php echo $row_product_detail['product_quantity'] ?> </span> sản phẩm <?php } else { ?>Hiện sản phẩm đã hết hàng<?php } ?></span>
                                 <div class="product-detail__variants">
                                     <div class="product-detail__variant">
                                         <h3 class="product-detail__variant--title h5">
@@ -131,8 +130,6 @@ while ($row_product_detail = mysqli_fetch_array($query_product_detail)) {
                                         </h3>
                                     </div>
                                 </div>
-                                <span class="h6" style="margin-left: 10px;"></span>
-
                                 <div class="select_order d-flex">
                                     <div class="product-detail__quantity">
                                         <h3 class="quantity__heading h5">Số lượng</h3>
@@ -149,7 +146,7 @@ while ($row_product_detail = mysqli_fetch_array($query_product_detail)) {
                                         </div>
                                     </div>
                                     <div class="product-detail__quantity">
-                                        <h3 class="quantity__heading h5">Loại</h3>
+                                        <h3 class="size__heading h5 pd-l-10">Chọn Size</h3>
                                         <div class="d-flex align-center">
                                             <div class="select__option p-relative">
                                                 <select name="product_scent" id="product_scent">
@@ -162,18 +159,20 @@ while ($row_product_detail = mysqli_fetch_array($query_product_detail)) {
                                                     ?>
                                                 </select>
                                             </div>
+                                            
                                         </div>
                                     </div>
                                 </div>
                                 <?php if ($row_product_detail['product_quantity'] > 0) { ?>
-                                    <input class="btn product-detail__addtocart w-100" type="submit" name="addtocart" value="THÊM VÀO GIỎ" />
-                                    <input class="btn product-detail__buynow w-100" type="submit" name="buynow" value="MUA NGAY" />
+                                    <input class="btn product-detail__addtocart w-100" type="submit" name="addtocart" value="Thêm vào giỏ" />
+
+                                    <input class="btn product-detail__buynow w-100" type="submit" name="buynow" value="Mua ngay" />
                                 <?php } else { ?>
                                     <a href="tel:+84878398141" class="btn product-detail__buynow w-100 text-center">Liên hệ</a>
                                 <?php } ?>
 
                             </form>
-                            <!-- <div class="describe__item describe__item--share">
+                            <div class="describe__item describe__item--share">
                                 <a class="product-detail__anchor" href="#">
                                     <ul class="social__items d-flex align-center">
                                         <li class="social__item">
@@ -182,7 +181,7 @@ while ($row_product_detail = mysqli_fetch_array($query_product_detail)) {
                                             </h3>
                                         </li>
                                         <li class="social__item opacity-50">
-                                            <a class="" href="#info-product">
+                                            <!-- <a class="" href="#info-product"> -->
                                             <a class="" href="#">
                                                 <img class="svg__icon d-block" src="./assets/images/icon/facebook.svg" alt="" />
                                             </a>
@@ -199,7 +198,7 @@ while ($row_product_detail = mysqli_fetch_array($query_product_detail)) {
                                         </li>
                                     </ul>
                                 </a>
-                            </div> -->
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -231,7 +230,7 @@ while ($row_product_detail = mysqli_fetch_array($query_product_detail)) {
         <div class="tab__content">
             <div class="container">
                 <div class="tab-pane active">
-                    <div class="product-detail__description">
+                    <div class="product-detail__description ">
                         <?php echo $row_product_detail['product_description'] ?>
                     </div>
                 </div>
@@ -319,15 +318,15 @@ while ($row_product_detail = mysqli_fetch_array($query_product_detail)) {
                                 </div>
                             </div>
                         </div>
-                        <div class="customer-rating d-flex flex-column align-center justify-center">
+                        <!-- <div class="customer-rating d-flex flex-column align-center justify-center">
                             <div class="avaluate__btn--title h5">Chia sẻ nhận xét về sản phẩm</div>
                             <button class="btn btn__outline evaluate__btn">Viết nhận xét</button>
-                        </div>
+                        </div> -->
                     </div>
 
                     <div class="comment-form">
                         <form class="post-comment" method="POST" action="site/handle/evaluate_rating.php?product_id=<?php echo $product_id; ?>">
-                            <div class="product-rate d-flex align-center h5">
+                            <div class="product-rate d-flex align-center">
                                 <div class="rate-text h5"> Đánh giá</div>
                                 <div class="rate-box">
                                     <input name="rate" type="radio" value="1">
@@ -338,7 +337,7 @@ while ($row_product_detail = mysqli_fetch_array($query_product_detail)) {
                                 </div>
                                 <div class="rate-text h5">cho sản phẩm này:</div>
                             </div>
-                            <!-- <label class="comment-label">Nhận xét (ý kiến sẽ thêm thông tin cho người khác mua hàng)</label> -->
+                            
                             <div class="form-element mg-t-20">
                                 <textarea class="form-control" name="evaluate_content" placeholder="Đánh giá về sản phẩm này!"></textarea>
                             </div>
@@ -346,11 +345,11 @@ while ($row_product_detail = mysqli_fetch_array($query_product_detail)) {
                                 <?php
                                 if (isset($_SESSION['account_id'])) {
                                 ?>
-                                    <button class="btn btn__solid mg-t-10 min-w-200" name="evaluate_add" type="submit">GỬI</button>
+                                    <button class="btn btn__solid mg-t-10" name="evaluate_add" type="submit">Gửi</button>
                                 <?php
                                 } else {
                                 ?>
-                                    <a class="btn btn__solid mg-t-10" href="index.php?page=login">ĐĂNG NHẬP ĐỂ ĐÁNH GIÁ</a>
+                                    <a class="btn btn__solid mg-t-10" href="index.php?page=login">Đăng nhập để đánh giá</a>
                                 <?php
                                 }
                                 ?>
@@ -363,8 +362,14 @@ while ($row_product_detail = mysqli_fetch_array($query_product_detail)) {
                         ?>
                             <div class="comment-item d-flex">
                                 <div class="f-cmuser"><abbr title="An Dev"><?php echo substr($evaluate['account_name'], 0, 1) ?></abbr></div>
+                                
                                 <div class="cmuser-content d-flex flex-column">
-                                    <span class=" d-flex">
+                                <div class="customer__name">
+                                        <strong class="h5 evaluate_name"><?php echo $evaluate['account_name'] ?></strong>
+                                        <span class="h5 evaluate_date">(<?php echo $evaluate['evaluate_date'] ?>)</span>
+                                        
+                                </div>
+                                <span class="review-star-list d-flex">
                                         <?php
                                         for ($i = 0; $i < 5; $i++) {
                                             if ($i < $evaluate['evaluate_rate']) {
@@ -379,11 +384,7 @@ while ($row_product_detail = mysqli_fetch_array($query_product_detail)) {
                                         }
                                         ?>
                                     </span>
-                                    <div class="customer__name">
-                                        <strong class="evaluate_name h5"><?php echo $evaluate['account_name'] ?></strong>
-                                        <span class="evaluate_date h5">(<?php echo $evaluate['evaluate_date'] ?>)</span>
-                                    </div>
-                                    <div class="evaluate_content h5"><?php echo $evaluate['evaluate_content'] ?></div>
+                                    <div class="h5 evaluate_content"><?php echo $evaluate['evaluate_content'] ?></div>
                                 </div>
                             </div>
                         <?php

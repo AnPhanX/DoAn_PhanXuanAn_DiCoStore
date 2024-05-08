@@ -109,17 +109,30 @@ if (isset($_GET['logout']) && $_GET['logout'] == 1) {
                                 <?php
                                 $sql_brand_list = "SELECT * FROM brand ORDER BY brand_id DESC";
                                 $query_brand_list = mysqli_query($mysqli, $sql_brand_list);
+                                $d=0;
                                 while ($row_brand = mysqli_fetch_array($query_brand_list)) {
+                                    if($d==0){
+                                        $d++;
                                 ?>
-                                    
                                     <li class="nav__item">
                                         <a class="nav__anchor2 h7 d-flex align-center space-between" href="index.php?page=products&brand_id=<?php echo $row_brand['brand_id'] ?>">
                                             <?php echo $row_brand['brand_name'];
                                              ?>
                                         </a>
                                     </li>
-                                    <hr>
                                 <?php
+                                    }else{
+                                        ?>
+                                        <hr>
+                                    <li class="nav__item">
+                                        <a class="nav__anchor2 h7 d-flex align-center space-between" href="index.php?page=products&brand_id=<?php echo $row_brand['brand_id'] ?>">
+                                            <?php echo $row_brand['brand_name'];
+                                             ?>
+                                        </a>
+                                    </li>
+                                <?php
+
+                                    }
                                 }
                                 ?>
                             </ul>

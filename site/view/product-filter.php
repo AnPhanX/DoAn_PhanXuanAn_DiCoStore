@@ -79,7 +79,7 @@ if (isset($_GET['pricefrom']) && isset($_GET['priceto'])) {
                             ?>
                                 <a href="index.php?page=products&category_id=<?php echo $categorys['category_id'];
                                                                                 echo $url_price;
-                                                                                echo $url_sort; ?>" class="sidebar__item--label d-block <?php if (isset($_GET['category_id']) && $categorys['category_id'] == $_GET['category_id']) {
+                                                                                echo $url_sort; ?>" class="h5 sidebar__item--label d-block <?php if (isset($_GET['category_id']) && $categorys['category_id'] == $_GET['category_id']) {
                                                                                                                                                 echo 'category__active';
                                                                                                                                             } ?>"><?php echo $categorys['category_name'] ?></a>
                             <?php
@@ -113,7 +113,7 @@ if (isset($_GET['pricefrom']) && isset($_GET['priceto'])) {
                     </div>
                     <div class="sidebar__item w-100">
                         <div class="sidebar__item--heading">
-                            <h3 class="h3">Giá</h3>
+                            <h3 class="h3">Khoảng giá</h3>
                         </div>
                         <div class="sidebar__item--content product-detail__variant--items d-flex">
                             <div class="price__range">
@@ -344,7 +344,7 @@ if (isset($_GET['pricefrom']) && isset($_GET['priceto'])) {
                                     <?php
                                     for ($i = 1; $i <= $totalpage; $i++) {
                                     ?>
-                                        <li class="pagination__item">
+                                        <li class="h5 pagination__item">
                                             <a class="pagination__anchor <?php if ($page == $i) {
                                                                                 echo "active";
                                                                             } else {
@@ -356,7 +356,7 @@ if (isset($_GET['pricefrom']) && isset($_GET['priceto'])) {
                                     ?>
                                     <?php if ($page != $totalpage) {
                                     ?>
-                                        <li class="pagination__item">
+                                        <li class="h5 pagination__item">
                                             <a class="d-flex align-center" href="<?php echo $currentLink ?>&pagenumber=<?php echo $page + 1 ?>">
                                                 <img src="./assets/images/icon/icon-nextlink.svg" alt="">
                                             </a>
