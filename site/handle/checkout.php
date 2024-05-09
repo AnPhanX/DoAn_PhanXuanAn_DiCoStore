@@ -7,9 +7,6 @@ require_once('config_vnpay.php');
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
 
-
-
-
 if (isset($_POST['redirect'])) {
     // Sinh ma don hang va ma giao hang
     $order_code = rand(0, 9999);
@@ -92,65 +89,7 @@ if (isset($_POST['redirect'])) {
             header('Location:checkout_momo_atm.php');
         } elseif ($order_type == 4) {
             
-            // xu ly toan bang vnpay
-            $vnp_TxnRef = $order_code; //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
-            $vnp_OrderInfo = 'Thanh toán đơn hàng DiCo Store';
-            $vnp_OrderType = 'billpayment';
-            $vnp_Amount = $total_amount * 100;
-            $vnp_Locale = 'vn';
-            $vnp_BankCode = 'NCB';
-            $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
-            //Add Params of 2.0.1 Version
-            $vnp_ExpireDate = $expire;
-
-            $inputData = array(
-                "vnp_Version" => "2.1.0",
-                "vnp_TmnCode" => $vnp_TmnCode,
-                "vnp_Amount" => $vnp_Amount,
-                "vnp_Command" => "pay",
-                "vnp_CreateDate" => date('YmdHis'),
-                "vnp_CurrCode" => "VND",
-                "vnp_IpAddr" => $vnp_IpAddr,
-                "vnp_Locale" => $vnp_Locale,
-                "vnp_OrderInfo" => $vnp_OrderInfo,
-                "vnp_OrderType" => $vnp_OrderType,
-                "vnp_ReturnUrl" => $vnp_Returnurl,
-                "vnp_TxnRef" => $vnp_TxnRef,
-                "vnp_ExpireDate" => $vnp_ExpireDate
-            );
- 
-            if (isset($vnp_BankCode) && $vnp_BankCode != "") {
-                $inputData['vnp_BankCode'] = $vnp_BankCode;
-            }
-
-            ksort($inputData);
-            $query = "";
-            $i = 0;
-            $hashdata = "";
-            foreach ($inputData as $key => $value) {
-                if ($i == 1) {
-                    $hashdata .= '&' . urlencode($key) . "=" . urlencode($value);
-                } else {
-                    $hashdata .= urlencode($key) . "=" . urlencode($value);
-                    $i = 1;
-                }
-                $query .= urlencode($key) . "=" . urlencode($value) . '&';
-            }
-
-            $vnp_Url = $vnp_Url . "?" . $query;
-            if (isset($vnp_HashSecret)) { 
-                $vnpSecureHash =   hash_hmac('sha512', $hashdata, $vnp_HashSecret); //  
-                $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
-            }   
-            $returnData = array(
-                'code' => '00', 'message' => 'success', 'data' => $vnp_Url
-            );
-            if (isset($_POST['redirect'])) {
-                header('Location:' . $vnp_Url);
-                die();
-            } else {
-                echo json_encode($returnData);
-            }
+           
         }
     } else {
         header('Location:../../index.php?page=404');
