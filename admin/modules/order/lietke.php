@@ -14,6 +14,8 @@ if ($page == '' || $page == 1) {
     $begin = ($page * 10) - 10;
 }
 
+$select_text ='';
+
 if (isset($_GET['order_status'])) {
     $order_status = $_GET['order_status'];
     $url_status = '&order_status='.$order_status;
@@ -23,15 +25,21 @@ if (isset($_GET['order_status'])) {
     $url_status = '';
     $sql_order_list = "SELECT * FROM orders JOIN account ON orders.account_id = account.account_id WHERE orders.order_status >= 0 AND orders.order_status < 3 ORDER BY orders.order_id DESC LIMIT $begin,10";
     $query_order_list = mysqli_query($mysqli, $sql_order_list);
+    $select_text ='Đơn đang xử lý';
+    if(mysqli_num_rows($query_order_list)<=0){
+        $select_text ='Đã hoàn thành';
+        $sql_order_list = "SELECT * FROM orders JOIN account ON orders.account_id = account.account_id WHERE orders.order_status = 3 ORDER BY orders.order_id DESC LIMIT $begin,10";
+        $query_order_list = mysqli_query($mysqli, $sql_order_list);
+    }
 }
 ?>
 <div class="row">
     <div class="col">
         <div class="header__list d-flex space-between align-center">
-            <h3 class="card-title" style="margin: 0;">Danh sách đơn hàng online</h3>
-            <div class="action_group">
+            <h3 class="card-title" style="margin: 0;">Danh sách đơn hàng </h3>
+            <!-- <div class="action_group">
                 <a href="#" class="button button-dark">Export</a>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>
@@ -61,14 +69,15 @@ if (isset($_GET['order_status'])) {
                                 } elseif(isset($_GET['order_status']) && $_GET['order_status'] == -1) {
                                     echo "Đơn đã hủy";
                                 } else {
-                                    echo "Đang thực hiện";
+                                    echo $select_text;
                                 }
                             ?>
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuSizeButton2">
-                            <a class="dropdown-item" href="index.php?action=order&query=order_list">Đơn đang thực hiện</a>
-                            <a class="dropdown-item" href="index.php?action=order&query=order_list&order_status=0">Đang xử lý</a>
-                            <a class="dropdown-item" href="index.php?action=order&query=order_list&order_status=1">Đang chuyển bị hàng</a>
+                            <!-- <a class="dropdown-item" href="index.php?action=order&query=order_list">Đơn đang thực hiện</a> -->
+                            <!-- <a class="dropdown-item" href="index.php?action=order&query=order_list&order_status=0">Đang xử lý</a> -->
+                            <a class="dropdown-item" href="index.php?action=order&query=order_list">Đang xử lý</a>
+                            <a class="dropdown-item" href="index.php?action=order&query=order_list&order_status=1">Đang chuẩn bị hàng</a>
                             <a class="dropdown-item" href="index.php?action=order&query=order_list&order_status=2">Đang giao hàng</a>
                             <a class="dropdown-item" href="index.php?action=order&query=order_list&order_status=3">Đã hoàn thành</a>
                             <a class="dropdown-item" href="index.php?action=order&query=order_list&order_status=-1">Đã hủy</a>

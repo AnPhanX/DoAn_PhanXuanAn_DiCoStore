@@ -283,14 +283,38 @@ if (isset($_POST['order_add'])) {
 
 // hoàn tiền
 if (isset($_GET['reverse']) && $_GET['reverse'] == 1) {
+    // foreach ($order_codes as $code) {
+    //     if (isset($_GET['payment']) && $_GET['payment'] = 'momo') {
+    //         $sql_reverse_payment = "UPDATE momo SET payment_status = -1 WHERE order_code = $code LIMIT 1";
+    //         mysqli_query($mysqli, $sql_get_order);
+    //     } elseif (isset($_GET['payment']) && $_GET['payment'] = 'vnpay') {
+    //         $sql_reverse_payment = "UPDATE vnpay SET payment_status = -1 WHERE order_code = $code LIMIT 1";
+    //         mysqli_query($mysqli, $sql_get_order);
+    //     }
+
+    //     $sql_order_reverse = "UPDATE orders SET order_status = -1 WHERE order_code = $code";
+    //     mysqli_query($mysqli, $sql_order_reverse);
+    // }
+    // header('Location: ../../index.php?action=order&query=order_payment&message=success');
     foreach ($order_codes as $code) {
-        if (isset($_GET['payment']) && $_GET['payment'] = 'momo') {
-            $sql_reverse_payment = "UPDATE momo SET payment_status = -1 WHERE order_code = $code LIMIT 1";
-            mysqli_query($mysqli, $sql_get_order);
-        } elseif (isset($_GET['payment']) && $_GET['payment'] = 'vnpay') {
-            $sql_reverse_payment = "UPDATE vnpay SET payment_status = -1 WHERE order_code = $code LIMIT 1";
-            mysqli_query($mysqli, $sql_get_order);
+        $sql_get_order = "SELECT * FROM orders WHERE order_code = $code LIMIT 1";
+        $query_get_order = mysqli_query($mysqli, $sql_get_order);
+
+        $sql_get_order_detail = "SELECT * FROM order_detail WHERE order_code = $code";
+        $query_order_detail = mysqli_query($mysqli, $sql_get_order_detail);
+
+        while ($item = mysqli_fetch_array($query_order_detail)) {
+            $product_id = $item['product_id'];
+            $query_get_product = mysqli_query($mysqli, "SELECT * FROM product WHERE product_id = $product_id");
+            $product = mysqli_fetch_array($query_get_product);
+            $quantity = $product['product_quantity'] + $item['product_quantity'];
+            $quantity_sales = $product['quantity_sales'] - $item['product_quantity'];
+
+            mysqli_query($mysqli, "UPDATE product SET product_quantity = $quantity, quantity_sales = $quantity_sales WHERE product_id = $product_id");
         }
+
+        $sql_order_cancel = "UPDATE orders SET order_status = -1 WHERE order_code = $code";
+        mysqli_query($mysqli, $sql_order_cancel);
     }
     header('Location: ../../index.php?action=order&query=order_payment&message=success');
 }

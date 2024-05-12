@@ -4,6 +4,48 @@ require '../system/core/carbon/autoload.php';
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
 
+    $sql = "DELETE FROM metrics WHERE 1";
+    $sql_query = mysqli_query($mysqli, $sql);
+    
+
+    $sql_orders = "SELECT * FROM orders WHERE order_status =3";
+    $query_get_orders = mysqli_query($mysqli, $sql_orders);
+    
+    while($order_item = mysqli_fetch_array($query_get_orders)){
+        $od_date = $order_item['order_date'];
+        $od_code = $order_item['order_code'];
+        $od_amount = $order_item['total_amount'];
+
+        $sql_order_detail = "SELECT SUM(product_quantity) AS pd_quantity FROM order_detail WHERE order_code = '$od_code' GROUP BY order_code";
+        $query_od_detail = mysqli_query($mysqli, $sql_order_detail);
+        $od_detail = mysqli_fetch_array($query_od_detail);
+        $order_quantity = $od_detail['pd_quantity'];
+
+        $now =  date('Y-m-d', strtotime($od_date));
+    
+
+        $sql_thongke = "SELECT * FROM metrics WHERE metric_date = '$now'";
+        $query_thongke = mysqli_query($mysqli, $sql_thongke);
+
+        if (mysqli_num_rows($query_thongke) == 0) {
+            $metric_sales = $od_amount;
+            $metric_quantity = $order_quantity;
+            $metric_order = 1;
+            $sql_update_metrics = "INSERT INTO metrics (metric_date, metric_order, metric_sales, metric_quantity) 
+                        VALUE ('$od_date', '$metric_order', '$metric_sales', '$metric_quantity')";
+            mysqli_query($mysqli, $sql_update_metrics);
+        } elseif (mysqli_num_rows($query_thongke) != 0) {
+            while ($row_tk = mysqli_fetch_array($query_thongke)) {
+                $metric_sales = $row_tk['metric_sales'] + $od_amount;
+                $metric_quantity = $row_tk['metric_quantity'] + $order_quantity;
+                $metric_order = $row_tk['metric_order'] + 1;
+                $sql_update_metrics = "UPDATE metrics SET metric_order = '$metric_order', metric_sales = '$metric_sales', metric_quantity = '$metric_quantity' WHERE metric_date = '$now'";
+                mysqli_query($mysqli, $sql_update_metrics);
+            }
+        }
+    }
+
+
 $now = Carbon::now('Asia/Ho_Chi_Minh')->subdays(-1)->toDateString();
 $subdays = Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
 $query_order = mysqli_query($mysqli, "SELECT * FROM orders WHERE order_date BETWEEN '$subdays' AND '$now'");
@@ -99,7 +141,11 @@ $customer_count = mysqli_num_rows($query_customer);
     </div>
 </div>
 
+
+
 <?php
+
+
 $sql_order_metric = "SELECT * FROM orders WHERE order_date BETWEEN '$subdays' AND '$now'";
 $query_metric = mysqli_query($mysqli, $sql_order_metric);
 
