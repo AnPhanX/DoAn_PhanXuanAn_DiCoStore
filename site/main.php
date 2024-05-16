@@ -47,6 +47,9 @@ include("./site/view/header.php");
     elseif ($action == 'register'){
         include("./site/main/register.php");
     }
+    elseif ($action == 'checkcode'){
+        include("./site/view/checkcode.php");
+    }
     elseif ($action == 'my_account'){
         include("./site/main/my_account.php");
     }

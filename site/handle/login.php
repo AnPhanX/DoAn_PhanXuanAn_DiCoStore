@@ -11,9 +11,21 @@
         if ($count>0) {
             $_SESSION['account_id'] = $row['account_id'];
             $_SESSION['account_email'] = $row['account_email'];
-            header('Location:../../index.php?page=my_account&tab=account_info&message=success');
+
+            $accemail = $_SESSION['account_email'];
+            $cartUnKey = md5($accemail);
+                
+                if (isset($_COOKIE['cart_'.$cartUnKey])) {
+                    $encodedCartGet = $_COOKIE['cart_'.$cartUnKey];
+                    $cartCook = json_decode($encodedCartGet, true);
+                    
+                    $_SESSION['cart'] = $cartCook; // Khôi phục giỏ hàng vào session
+                  }
+            
+            // header('Location:../../index.php?page=my_account&tab=account_info&message=success');
+            header('Location:../../index.php');
         }else {
-            header('Location:../../index.php?page=login');
-            echo '<script>alert("Tài khoản hoặc mật khẩu không chính xác, vui lòng nhập lại");</script>';
+            header('Location:../../index.php?page=login&message=errorlogin');
+            //echo '<script>alert("Tài khoản hoặc mật khẩu không chính xác, vui lòng nhập lại");</script>';
         }
     }

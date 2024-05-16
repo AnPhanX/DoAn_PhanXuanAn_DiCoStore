@@ -42,6 +42,6 @@
         }
     } else {
         echo '<script>alert("Mã xác thực không chính xác");</script>';
-        header('Location:checkcode.php?message=error');
+        header('Location:../../../index.php?page=checkcode&message=error');
     }
 ?>
