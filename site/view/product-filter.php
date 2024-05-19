@@ -21,6 +21,9 @@ if (isset($_GET['pricesort']) && $_GET['pricesort'] == 'asc') {
     $url_sort = "";
     $sortby = "";
 }
+$url='';
+$brand_name='';
+$cate_name='';
 
 if (isset($_GET['pricefrom']) && isset($_GET['priceto'])) {
     $price_from = $_GET['pricefrom'];
@@ -31,17 +34,67 @@ if (isset($_GET['pricefrom']) && isset($_GET['priceto'])) {
         $url_brand = '';
         $sql_product_list = "SELECT * FROM product JOIN category ON product.product_category = category.category_id WHERE product.product_category = '" . $_GET['category_id'] . "' AND product_price > $price_from AND product_price < $price_to AND product_status = 1 " . $sortby . " LIMIT $begin,9";
         $query_product_list = mysqli_query($mysqli, $sql_product_list);
+
+        $product_list= mysqli_fetch_array($query_product_list);
+        if($product_list != null){
+            $cate_name=$product_list['category_name'];
+        }
     } elseif (isset($_GET['brand_id'])) {
         $url_category = '';
         $url_brand = '&brand_id=' . $_GET['brand_id'];
         $sql_product_list = "SELECT * FROM product JOIN brand ON product.product_brand = brand.brand_id WHERE product.product_brand = '" . $_GET['brand_id'] . "' AND product_price > $price_from AND product_price < $price_to AND product_status = 1 " . $sortby . " LIMIT $begin,9";
         $query_product_list = mysqli_query($mysqli, $sql_product_list);
+
+        $product_list= mysqli_fetch_array($query_product_list);
+        $brand_name=$product_list['brand_name'];
     } else {
         $url_brand = '';
         $url_category = '';
         $sql_product_list = "SELECT * FROM product WHERE product_price BETWEEN '" . $price_from . "' AND '" . $price_to . "' AND product_status = 1 " . $sortby . " LIMIT $begin,9";
         $query_product_list = mysqli_query($mysqli, $sql_product_list);
     }
+    
+    
+    // $price_from = $_GET['pricefrom'];
+    // $price_to = $_GET['priceto'];
+    // $url_price = "&pricefrom=" . $price_from . "&priceto=" . $price_to;
+  
+    
+    // $where_clause = []; // Build dynamic WHERE clause
+    
+    // if (isset($_GET['category_id'])) {
+    //   $where_clause[] = "product.product_category = '" . $_GET['category_id'] . "'";
+    //   $url_category = '&category_id=' . $_GET['category_id'];
+    // }else{
+    //     $url_category = '';
+    // }
+  
+    // if (isset($_GET['brand_id'])) {
+    //   $where_clause[] = "product.product_brand = '" . $_GET['brand_id'] . "'";
+    //   $url_brand = '&brand_id=' . $_GET['brand_id'];
+    // }else{
+    //     $url_brand = '';
+    // }
+  
+    // // Combine WHERE clauses using AND
+    // $where_string = (count($where_clause) > 0) ? " WHERE " . implode(" AND ", $where_clause) : "";
+    // $_SESSION['where_clause'] =$where_string;
+
+    // $sql_product_list = "SELECT * FROM product
+    //                       JOIN category ON product.product_category = category.category_id
+    //                       JOIN brand ON product.product_brand = brand.brand_id
+    //                       " . $_SESSION['where_clause'] . "
+    //                       AND product_price > $price_from AND product_price < $price_to
+    //                       AND product_status = 1 " . $sortby . "
+    //                       LIMIT $begin,9";
+  
+    // $query_product_list = mysqli_query($mysqli, $sql_product_list);
+  
+    // $product_list = mysqli_fetch_array($query_product_list);
+    // if ($product_list != null) {
+    //   $cate_name = $product_list['category_name'];
+    //   $brand_name = $product_list['brand_name'];
+    // }
 } else {
     $url_price = '';
     if (isset($_GET['category_id'])) {
@@ -49,17 +102,61 @@ if (isset($_GET['pricefrom']) && isset($_GET['priceto'])) {
         $url_category = '&category_id=' . $_GET['category_id'];
         $sql_product_list = "SELECT * FROM product JOIN category ON product.product_category = category.category_id WHERE product.product_category = '" . $_GET['category_id'] . "' AND product_status = 1 " . $sortby . " LIMIT $begin,9";
         $query_product_list = mysqli_query($mysqli, $sql_product_list);
+
+        $product_list= mysqli_fetch_array($query_product_list);
+        if($product_list != null){
+            $cate_name=$product_list['category_name'];
+        }
+        
     } elseif (isset($_GET['brand_id'])) {
         $url_category = '';
         $url_brand = '&brand_id=' . $_GET['brand_id'];
         $sql_product_list = "SELECT * FROM product JOIN brand ON product.product_brand = brand.brand_id WHERE product.product_brand = '" . $_GET['brand_id'] . "' AND product_status = 1 " . $sortby . " LIMIT $begin,9";
         $query_product_list = mysqli_query($mysqli, $sql_product_list);
+
+        $product_list= mysqli_fetch_array($query_product_list);
+        $brand_name=$product_list['brand_name'];
     } else {
         $url_category = '';
         $url_brand = '';
         $sql_product_list = "SELECT * FROM product WHERE product_status = 1 " . $sortby . " LIMIT $begin,9";
         $query_product_list = mysqli_query($mysqli, $sql_product_list);
     }
+   
+    // $where_clause = []; // Build dynamic WHERE clause
+
+    // if (isset($_GET['category_id'])) {
+    //   $where_clause[] = "product.product_category = '" . $_GET['category_id'] . "'";
+    //   $url_category = '&category_id=' . $_GET['category_id'];
+    // }else{
+    //     $url_category = '';
+    // }
+  
+    // if (isset($_GET['brand_id'])) {
+    //   $where_clause[] = "product.product_brand = '" . $_GET['brand_id'] . "'";
+    //   $url_brand = '&brand_id=' . $_GET['brand_id'];
+    // }else{
+    //     $url_brand = '';
+    // }
+  
+    // // Combine WHERE clauses using AND
+    // $where_string = (count($where_clause) > 0) ? " WHERE " . implode(" AND ", $where_clause) : "";
+  
+    // $sql_product_list = "SELECT * FROM product
+    //                       JOIN category ON product.product_category = category.category_id
+    //                       JOIN brand ON product.product_brand = brand.brand_id
+    //                       " . $where_string . "
+                         
+    //                       AND product_status = 1 " . $sortby . "
+    //                       LIMIT $begin,9";
+  
+    // $query_product_list = mysqli_query($mysqli, $sql_product_list);
+  
+    // $product_list = mysqli_fetch_array($query_product_list);
+    // if ($product_list != null) {
+    //   $cate_name = $product_list['category_name'];
+    //   $brand_name = $product_list['brand_name'];
+    // }
 }
 ?>
 <div class="product-list">
@@ -92,7 +189,7 @@ if (isset($_GET['pricefrom']) && isset($_GET['priceto'])) {
                             <h3 class="h3">Bộ sưu tập</h3>
                         </div>
                         <div class="sidebar__item--content">
-                            <div class="product-detail__variant--items d-flex">
+                            <div class="">
                                 <?php
                                 $sql_brands = "SELECT * FROM brand ORDER BY brand_id DESC";
                                 $query_brands = mysqli_query($mysqli, $sql_brands);
@@ -100,8 +197,8 @@ if (isset($_GET['pricefrom']) && isset($_GET['priceto'])) {
                                 ?>
                                     <a href="index.php?page=products&brand_id=<?php echo $brands['brand_id'];
                                                                                 echo $url_price;
-                                                                                echo $url_sort; ?>" class="custom-label product-detail__variant--item <?php if (isset($_GET['brand_id']) && $brands['brand_id'] == $_GET['brand_id']) {
-                                                                                                                                                                echo 'variant__active';
+                                                                                echo $url_sort; ?>" class="h5 sidebar__item--label d-block <?php if (isset($_GET['brand_id']) && $brands['brand_id'] == $_GET['brand_id']) {
+                                                                                                                                                                echo 'category__active';
                                                                                                                                                             } ?>" for="1">
                                         <?php echo $brands['brand_name'] ?>
                                     </a>
@@ -136,7 +233,7 @@ if (isset($_GET['pricefrom']) && isset($_GET['priceto'])) {
                                     </div>
 
                                 </div>
-                                <a href="" class="btn btn__solid btn__filter text-right" onclick="setUrlPrice();">Lọc</a>
+                                <a href="" class="btn btn__solid btn__filter text-center" onclick="setUrlPrice();">Lọc</a>
                             </div>
                         </div>
                     </div>
@@ -171,7 +268,7 @@ if (isset($_GET['pricefrom']) && isset($_GET['priceto'])) {
                                     <div class="d-flex align-center">
                                         <div class="btn__tag d-flex align-center"><img class="icon-close" src="./assets/images/icon/icon-close.png" alt=""></div>
                                         <div class="tag__content d-flex align-center">
-                                            <span class="tag__name h5">Danh mục sản phẩm</span>
+                                            <span class="tag__name h5"><?php echo $cate_name ?></span>
                                         </div>
                                     </div>
                                 </a>
@@ -185,7 +282,7 @@ if (isset($_GET['pricefrom']) && isset($_GET['priceto'])) {
                                     <div class="d-flex align-center">
                                         <div class="btn__tag d-flex align-center"><img class="icon-close" src="./assets/images/icon/icon-close.png" alt=""></div>
                                         <div class="tag__content d-flex align-center">
-                                            <span class="tag__name h5">Thương hiệu</span>
+                                            <span class="tag__name h5"><?php echo $brand_name ?></span>
                                         </div>
                                     </div>
                                 </a>
@@ -200,7 +297,7 @@ if (isset($_GET['pricefrom']) && isset($_GET['priceto'])) {
                     while ($row = mysqli_fetch_array($query_product_list)) {
                         $i++;
                     ?>
-                        <div class="col" style="--w: 9; --w-md: 4">
+                        <div class="col product_it" style="--w: 9; --w-md: 4">
                             <div class="product__card d-flex flex-column">
                                 <div class="product__image p-relative">
                                     <a href="index.php?page=product_detail&product_id=<?php echo $row['product_id'] ?>">

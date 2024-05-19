@@ -1,8 +1,6 @@
 <?php
 	session_start();
 	include('../../admin/config/config.php');
-
-
 	//them so luong
 	if(isset($_GET['sum'])){
 		$status = 1;
@@ -22,7 +20,7 @@
 					$status = 0;
 				}
 				$_SESSION['cart'] = $product;
-
+				
 			} else{
 				$product[]= array('product_id'=>$cart_item['product_id'], 'variant_id'=>$cart_item['variant_id'], 'product_name'=>$cart_item['product_name'],'product_quantity'=>$cart_item['product_quantity'],'product_price'=>$cart_item['product_price'],'product_sale'=>$cart_item['product_sale'],'product_image'=>$cart_item['product_image']);
 				$_SESSION['cart'] = $product;
@@ -34,7 +32,6 @@
 			header('Location:../../index.php?page=cart&message=error');
 		}
 	}
-
 	//tru so luong
 	if(isset($_GET['div'])){
 		$product_type=$_GET['product_type'];
@@ -58,27 +55,24 @@
 		}
 		header('Location:../../index.php?page=cart&message=success');
 	}
-
 	// Xoa san pham khoi gio hang
 	if(isset($_SESSION['cart']) && isset($_GET['delete'])) {
 		$product_id = $_GET['delete'];
 		$product_type =$_GET['product_type'];
 		foreach ($_SESSION['cart'] as $cart_item) {
 			if ($cart_item['product_id'] != $product_id || $cart_item['variant_id'] != $product_type) {
-				//kiem tra dung thi bo qua, gan cac product con lai vao cart
 				$product[]= array('product_id'=>$cart_item['product_id'], 'variant_id'=>$cart_item['variant_id'], 'product_name'=>$cart_item['product_name'],'product_quantity'=>$cart_item['product_quantity'],'product_price'=>$cart_item['product_price'],'product_sale'=>$cart_item['product_sale'],'product_image'=>$cart_item['product_image']);
 			}
 			$_SESSION['cart'] = $product;
 			header('Location:../../index.php?page=cart&message=success');
 		}
 	}
-
 	// them sanpham vao gio hang
 	if(isset($_POST['addtocart'])){
         // session_destroy();
 		$product_id=$_GET['product_id'];
-		// $variant_id=$_POST['product_scent'];
-		$variant_id=$_POST['product_scent'];
+		// $variant_id=$_POST['product_size'];
+		$variant_id=$_POST['product_size'];
 		$product_quantity=$_POST['product_quantity'];
 		$sql ="SELECT * FROM product WHERE product_id='".$product_id."' LIMIT 1";
 		$query = mysqli_query($mysqli,$sql);
@@ -116,7 +110,7 @@
 	if(isset($_POST['buynow'])){
         // session_destroy();
 		$product_id=$_GET['product_id'];
-		$variant_id=$_POST['product_scent'];
+		$variant_id=$_POST['product_size'];
 		$product_quantity=$_POST['product_quantity'];
 		$sql ="SELECT * FROM product WHERE product_id='".$product_id."' LIMIT 1";
 		$query = mysqli_query($mysqli,$sql);

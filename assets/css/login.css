@@ -8,6 +8,21 @@
     width: 100%;
     background: url('../images/banner/login_background_1.png') no-repeat;
     background-position: center;
+    top:0;
+    background-size: cover;
+}
+
+.register{
+    font-family: 'poppins',sans-serif;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    width: 100%;
+    background: url('../images/banner/background-login.png') no-repeat;
+    background-position: center;
+    top:0;
     background-size: cover;
 }
 
@@ -39,6 +54,18 @@ input[type="Email"]::placeholder {
     align-items: center;
 
 }
+.form-box-reg{
+    position: relative;
+    max-width: 700px;
+    width: 100%;
+    height: auto;
+    background: transparent;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
+}
+
+
 .login-title{
     font-size: 2em;
     color: var(--color-text-black);
@@ -117,17 +144,17 @@ top: -5px;
     background-color: var(--color-gray-dark);
 }
 
-.form-box .register {
+.form-box .registerb {
     font-size: .9em;
     color: var(--color-text-white);
     text-align: center;
     margin: 25px 0 10px;
 }
-.form-box .register p a{
+.form-box .registerb p a{
     text-decoration: none;
     color: var(--color-text-white);
     font-weight: 600;
 }
-.form-box .register p a:hover{
+.form-box .registerb p a:hover{
     text-decoration: underline;
 }

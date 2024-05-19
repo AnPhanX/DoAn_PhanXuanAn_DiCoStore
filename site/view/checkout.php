@@ -91,20 +91,20 @@ if (isset($_SESSION['account_id'])) {
                                 <span class="d-block">Thanh toán khi nhận hàng</span>
                             </label>
                         </div>
-                        <div class="payment__item d-flex align-center">
+                        <!-- <div class="payment__item d-flex align-center">
                             <input class="payment__radio" type="radio" name="order_type" id="payment_momo_qr" value="2" />
                             <img class="payment__icon" src="./assets/images/payment/qrcode.png" alt="QR CODE" style="width: 62px;">
                             <label class="payment__label w-100 h-100" for="payment_momo_qr">
                                 <span class="d-block">QR CODE</span>
                                 <span class="d-block">Thanh toán MOMO QRCODE</span>
                             </label>
-                        </div>
+                        </div> -->
                         <div class="payment__item d-flex align-center">
                             <input class="payment__radio" type="radio" name="order_type" id="payment_momo_atm" value="3" />
                             <img class="payment__icon" src="./assets/images/payment/momo.png" alt="QR CODE" style="width: 62px;">
                             <label class="payment__label w-100 h-100" for="payment_momo_atm">
-                                <span class="d-block">MOMO</span>
-                                <span class="d-block">Thanh toán chuyển khoản MOMO</span>
+                                <span class="d-block">MoMo</span>
+                                <span class="d-block">Thanh toán bằng tài khoản MoMo</span>
                             </label>
                         </div>
                         <div class="payment__item d-flex align-center">
@@ -112,7 +112,7 @@ if (isset($_SESSION['account_id'])) {
                             <img class="payment__icon" src="./assets/images/payment/vnpay.png" alt="QR CODE" style="width: 62px;">
                             <label class="payment__label w-100 h-100" for="payment_vnp">
                                 <span class="d-block">VNPAY</span>
-                                <span class="d-block">Thanh toán chuyển khoản VNPAY</span>
+                                <span class="d-block">Thanh toán bằng tài khoản VNPAY</span>
                             </label>
                         </div>
                     </div>
@@ -126,7 +126,7 @@ if (isset($_SESSION['account_id'])) {
                             $total = 0;
                             if (isset($_SESSION['cart'])) {
                                 foreach ($_SESSION['cart'] as $cart_item) {
-                                    $query_product = mysqli_query($mysqli, "SELECT * FROM product AS p JOIN product_variant AS pv ON p.product_id=pv.product_id WHERE p.product_id = '" . $cart_item['product_id'] . "' AND pv.variant_id = '" . $cart_item['variant_id'] . "' LIMIT 1");
+                                    $query_product = mysqli_query($mysqli, "SELECT * FROM product AS p JOIN product_size AS pv ON p.product_id=pv.product_id WHERE p.product_id = '" . $cart_item['product_id'] . "' AND pv.variant_id = '" . $cart_item['variant_id'] . "' LIMIT 1");
                                     $product = mysqli_fetch_array($query_product);
                                     $sale += ($product['product_price'] / 100 * $product['product_sale'])* $cart_item['product_quantity'];
                                     $total += ($product['product_price'] - ($product['product_price'] / 100 * $product['product_sale'])) * $cart_item['product_quantity'];
@@ -141,7 +141,7 @@ if (isset($_SESSION['account_id'])) {
                                             <span class=" h6 d-block">
                                                 Loại:
                                                 <?php
-                                                $sql_variant = "SELECT * FROM product AS p JOIN product_variant AS pv ON p.product_id=pv.product_id WHERE p.product_id = '" . $cart_item['product_id'] . "' AND pv.variant_id = '" . $cart_item['variant_id'] . "' LIMIT 1";
+                                                $sql_variant = "SELECT * FROM product AS p JOIN product_size AS pv ON p.product_id=pv.product_id WHERE p.product_id = '" . $cart_item['product_id'] . "' AND pv.variant_id = '" . $cart_item['variant_id'] . "' LIMIT 1";
                                                 $query_variant = mysqli_query($mysqli, $sql_variant);
                                                 while ($variant = mysqli_fetch_array($query_variant)) {
                                                     echo $variant['variant_name'];
@@ -182,10 +182,13 @@ if (isset($_SESSION['account_id'])) {
                                 <span class="h4 checkout__total"><?php echo number_format((float) $total) . '₫' ?></span>
                             </div>
                         </div>
-                        <div >
-                            <button type="submit" name="redirect" class="btn btn__solid">Thanh toán</button>
-                            <a href="index.php?page=cart" class="btn anchor">Quay lại giỏ hàng</a>
-                        </div>
+                        
+                            <button type="submit" name="redirect" class="col btn btn__solid">Thanh toán</button>
+                            <a href="index.php?page=cart" class="col btn btn__outline mg-t-5 text-center anchor">
+                                <i class="mdi mdi-reply"></i>
+                                Quay lại giỏ hàng
+                            </a>
+                        
                     </div>
                 </div>
             </div>
