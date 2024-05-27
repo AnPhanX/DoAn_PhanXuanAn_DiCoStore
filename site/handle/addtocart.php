@@ -123,7 +123,7 @@
 				$found = false;
 				foreach($_SESSION['cart'] as $cart_item){
 					//neu du lieu trung
-					if($cart_item['product_id']==$product_id){
+					if($cart_item['product_id']==$product_id && $cart_item['variant_id']==$variant_id){
 						$product[]= array('product_id'=>$cart_item['product_id'], 'variant_id'=>$cart_item['variant_id'], 'product_name'=>$cart_item['product_name'],'product_quantity'=>$cart_item['product_quantity']+$product_quantity,'product_price'=>$cart_item['product_price'],'product_sale'=>$row['product_sale'],'product_image'=>$cart_item['product_image']);
 						$found = true;
 					}else{

@@ -21,9 +21,9 @@ if (isset($_GET['pricesort']) && $_GET['pricesort'] == 'asc') {
     $url_sort = "";
     $sortby = "";
 }
-$url='';
-$brand_name='';
-$cate_name='';
+$url = '';
+$brand_name = '';
+$cate_name = '';
 
 if (isset($_GET['pricefrom']) && isset($_GET['priceto'])) {
     $price_from = $_GET['pricefrom'];
@@ -35,9 +35,9 @@ if (isset($_GET['pricefrom']) && isset($_GET['priceto'])) {
         $sql_product_list = "SELECT * FROM product JOIN category ON product.product_category = category.category_id WHERE product.product_category = '" . $_GET['category_id'] . "' AND product_price > $price_from AND product_price < $price_to AND product_status = 1 " . $sortby . " LIMIT $begin,9";
         $query_product_list = mysqli_query($mysqli, $sql_product_list);
 
-        $product_list= mysqli_fetch_array($query_product_list);
-        if($product_list != null){
-            $cate_name=$product_list['category_name'];
+        $product_list = mysqli_fetch_array($query_product_list);
+        if ($product_list != null) {
+            $cate_name = $product_list['category_name'];
         }
     } elseif (isset($_GET['brand_id'])) {
         $url_category = '';
@@ -45,37 +45,37 @@ if (isset($_GET['pricefrom']) && isset($_GET['priceto'])) {
         $sql_product_list = "SELECT * FROM product JOIN brand ON product.product_brand = brand.brand_id WHERE product.product_brand = '" . $_GET['brand_id'] . "' AND product_price > $price_from AND product_price < $price_to AND product_status = 1 " . $sortby . " LIMIT $begin,9";
         $query_product_list = mysqli_query($mysqli, $sql_product_list);
 
-        $product_list= mysqli_fetch_array($query_product_list);
-        $brand_name=$product_list['brand_name'];
+        $product_list = mysqli_fetch_array($query_product_list);
+        $brand_name = $product_list['brand_name'];
     } else {
         $url_brand = '';
         $url_category = '';
         $sql_product_list = "SELECT * FROM product WHERE product_price BETWEEN '" . $price_from . "' AND '" . $price_to . "' AND product_status = 1 " . $sortby . " LIMIT $begin,9";
         $query_product_list = mysqli_query($mysqli, $sql_product_list);
     }
-    
-    
+
+
     // $price_from = $_GET['pricefrom'];
     // $price_to = $_GET['priceto'];
     // $url_price = "&pricefrom=" . $price_from . "&priceto=" . $price_to;
-  
-    
+
+
     // $where_clause = []; // Build dynamic WHERE clause
-    
+
     // if (isset($_GET['category_id'])) {
     //   $where_clause[] = "product.product_category = '" . $_GET['category_id'] . "'";
     //   $url_category = '&category_id=' . $_GET['category_id'];
     // }else{
     //     $url_category = '';
     // }
-  
+
     // if (isset($_GET['brand_id'])) {
     //   $where_clause[] = "product.product_brand = '" . $_GET['brand_id'] . "'";
     //   $url_brand = '&brand_id=' . $_GET['brand_id'];
     // }else{
     //     $url_brand = '';
     // }
-  
+
     // // Combine WHERE clauses using AND
     // $where_string = (count($where_clause) > 0) ? " WHERE " . implode(" AND ", $where_clause) : "";
     // $_SESSION['where_clause'] =$where_string;
@@ -87,9 +87,9 @@ if (isset($_GET['pricefrom']) && isset($_GET['priceto'])) {
     //                       AND product_price > $price_from AND product_price < $price_to
     //                       AND product_status = 1 " . $sortby . "
     //                       LIMIT $begin,9";
-  
+
     // $query_product_list = mysqli_query($mysqli, $sql_product_list);
-  
+
     // $product_list = mysqli_fetch_array($query_product_list);
     // if ($product_list != null) {
     //   $cate_name = $product_list['category_name'];
@@ -103,26 +103,25 @@ if (isset($_GET['pricefrom']) && isset($_GET['priceto'])) {
         $sql_product_list = "SELECT * FROM product JOIN category ON product.product_category = category.category_id WHERE product.product_category = '" . $_GET['category_id'] . "' AND product_status = 1 " . $sortby . " LIMIT $begin,9";
         $query_product_list = mysqli_query($mysqli, $sql_product_list);
 
-        $product_list= mysqli_fetch_array($query_product_list);
-        if($product_list != null){
-            $cate_name=$product_list['category_name'];
+        $product_list = mysqli_fetch_array($query_product_list);
+        if ($product_list != null) {
+            $cate_name = $product_list['category_name'];
         }
-        
     } elseif (isset($_GET['brand_id'])) {
         $url_category = '';
         $url_brand = '&brand_id=' . $_GET['brand_id'];
         $sql_product_list = "SELECT * FROM product JOIN brand ON product.product_brand = brand.brand_id WHERE product.product_brand = '" . $_GET['brand_id'] . "' AND product_status = 1 " . $sortby . " LIMIT $begin,9";
         $query_product_list = mysqli_query($mysqli, $sql_product_list);
 
-        $product_list= mysqli_fetch_array($query_product_list);
-        $brand_name=$product_list['brand_name'];
+        $product_list = mysqli_fetch_array($query_product_list);
+        $brand_name = $product_list['brand_name'];
     } else {
         $url_category = '';
         $url_brand = '';
         $sql_product_list = "SELECT * FROM product WHERE product_status = 1 " . $sortby . " LIMIT $begin,9";
         $query_product_list = mysqli_query($mysqli, $sql_product_list);
     }
-   
+
     // $where_clause = []; // Build dynamic WHERE clause
 
     // if (isset($_GET['category_id'])) {
@@ -131,27 +130,27 @@ if (isset($_GET['pricefrom']) && isset($_GET['priceto'])) {
     // }else{
     //     $url_category = '';
     // }
-  
+
     // if (isset($_GET['brand_id'])) {
     //   $where_clause[] = "product.product_brand = '" . $_GET['brand_id'] . "'";
     //   $url_brand = '&brand_id=' . $_GET['brand_id'];
     // }else{
     //     $url_brand = '';
     // }
-  
+
     // // Combine WHERE clauses using AND
     // $where_string = (count($where_clause) > 0) ? " WHERE " . implode(" AND ", $where_clause) : "";
-  
+
     // $sql_product_list = "SELECT * FROM product
     //                       JOIN category ON product.product_category = category.category_id
     //                       JOIN brand ON product.product_brand = brand.brand_id
     //                       " . $where_string . "
-                         
+
     //                       AND product_status = 1 " . $sortby . "
     //                       LIMIT $begin,9";
-  
+
     // $query_product_list = mysqli_query($mysqli, $sql_product_list);
-  
+
     // $product_list = mysqli_fetch_array($query_product_list);
     // if ($product_list != null) {
     //   $cate_name = $product_list['category_name'];
@@ -159,6 +158,7 @@ if (isset($_GET['pricefrom']) && isset($_GET['priceto'])) {
     // }
 }
 ?>
+
 <div class="product-list">
     <div class="container pd-bottom">
         <div class="row">
@@ -198,8 +198,8 @@ if (isset($_GET['pricefrom']) && isset($_GET['priceto'])) {
                                     <a href="index.php?page=products&brand_id=<?php echo $brands['brand_id'];
                                                                                 echo $url_price;
                                                                                 echo $url_sort; ?>" class="h5 sidebar__item--label d-block <?php if (isset($_GET['brand_id']) && $brands['brand_id'] == $_GET['brand_id']) {
-                                                                                                                                                                echo 'category__active';
-                                                                                                                                                            } ?>" for="1">
+                                                                                                                                                echo 'category__active';
+                                                                                                                                            } ?>" for="1">
                                         <?php echo $brands['brand_name'] ?>
                                     </a>
                                 <?php
@@ -237,7 +237,7 @@ if (isset($_GET['pricefrom']) && isset($_GET['priceto'])) {
                             </div>
                         </div>
                     </div>
-                   
+
                 </div>
             </div>
             <div class="col" style="--w-md:9;">
@@ -377,16 +377,16 @@ if (isset($_GET['pricefrom']) && isset($_GET['priceto'])) {
                                         </div>
                                     </a> -->
                                     <div class="product__price align-center d-flex justify-center">
-                                            <?php
-                                            if ($row['product_sale'] > 0) {
-                                            ?>
-                                                <del class="product__price--old h5"><?php echo number_format($row['product_price']) . ' ₫' ?></del>
+                                        <?php
+                                        if ($row['product_sale'] > 0) {
+                                        ?>
+                                            <del class="product__price--old h5"><?php echo number_format($row['product_price']) . ' ₫' ?></del>
 
-                                            <?php
-                                            }
-                                            ?>
-                                            <span class="product__price--new h4"><?php echo (number_format($row['product_price'] - ($row['product_price'] / 100 * $row['product_sale']))) . ' vnđ' ?></span>
-                                        </div>
+                                        <?php
+                                        }
+                                        ?>
+                                        <span class="product__price--new h4"><?php echo (number_format($row['product_price'] - ($row['product_price'] / 100 * $row['product_sale']))) . ' vnđ' ?></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -478,6 +478,7 @@ if (isset($_GET['pricefrom']) && isset($_GET['priceto'])) {
         </div>
     </div>
 </div>
+
 <script>
     var currentURL = window.location.href;
 

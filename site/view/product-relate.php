@@ -2,12 +2,13 @@
 $product_id = $_GET['product_id'];
 $sql_product_relate = "SELECT * FROM product WHERE product_id = $product_id LIMIT 1";
 $query_product_relate = mysqli_query($mysqli, $sql_product_relate);
-$row_relate = mysqli_fetch_array($query_product_relate)
+$row_relate = mysqli_fetch_array($query_product_relate);
     if($row_relate['product_brand']!=0){
-        $sql_product_list = "SELECT * FROM product WHERE product_brand = '" . $row_relate['product_brand'] . "' DESC LIMIT 4";
+        $sql_product_list = "SELECT * FROM product WHERE product_brand = '" . $row_relate['product_brand'] . "' ORDER BY product_id DESC LIMIT 4";
         $query_product_list = mysqli_query($mysqli, $sql_product_list);
+        
     }else{
-        $sql_product_list = "SELECT * FROM product WHERE product_category = '" . $row_relate['product_category'] . "' DESC LIMIT 4";
+        $sql_product_list = "SELECT * FROM product WHERE product_category = '" . $row_relate['product_category'] . "' ORDER BY product_id DESC LIMIT 4";
         $query_product_list = mysqli_query($mysqli, $sql_product_list);
     }
 
@@ -43,7 +44,7 @@ $row_relate = mysqli_fetch_array($query_product_relate)
                             <a href="index.php?page=product_detail&product_id=<?php echo $row['product_id'] ?>">
                                 <h3 class="product__name h5"><?php echo mb_strimwidth($row['product_name'], 0, 50, "...") ?></h3>
                             </a>
-                            <span class="review-star-list d-flex">
+                            <span class="review-star-list align-center d-flex justify-center">
                                 <?php
                                 $query_evaluate_rating = mysqli_query($mysqli, "SELECT * FROM evaluate WHERE product_id='" . $row['product_id'] . "' AND evaluate_status = 1");
 
@@ -93,7 +94,7 @@ $row_relate = mysqli_fetch_array($query_product_relate)
                                 <span>(<?php echo $total_rate ?>)</span>
                             </span>
                             <a href="index.php?page=product_detail&product_id=<?php echo $row['product_id'] ?>">
-                                <div class="product__price align-center">
+                                <div class="product__price align-center d-flex justify-center">
                                     <?php
                                     if ($row['product_sale'] > 0) {
                                     ?>

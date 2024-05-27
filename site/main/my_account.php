@@ -13,7 +13,7 @@ if (isset($_GET['logout']) && $_GET['logout'] == 1) {
 
 <!-- start my account -->
 <section class="my-account pd-section-my-acc">
-    <div class="container">
+    <div class="container pd-bottom">
     <?php 
     if (isset($_SESSION['account_email'])) {
         $account_id = $_SESSION['account_id'];
@@ -21,7 +21,7 @@ if (isset($_GET['logout']) && $_GET['logout'] == 1) {
         $query_account = mysqli_query($mysqli, $sql_account);
         while ($row_account = mysqli_fetch_array($query_account)) {
         ?>
-        <h3 class="h3 my-account__heading"><b>THÔNG TIN TÀI KHOẢN : </b><?php echo $row_account['account_name'] ?></h3>
+        <h4 class="h4 my-account__heading mg-l-20"><b>THÔNG TIN TÀI KHOẢN : </b><?php echo $row_account['account_name'] ?></h4>
         <?php
                 }
                 ?>
@@ -47,9 +47,9 @@ if (isset($_GET['logout']) && $_GET['logout'] == 1) {
                         <li class="my-account__item <?php if($tab == 'account_history') { echo 'active';} ?>">
                             <a href="index.php?page=my_account&tab=account_history" class="">Lịch sử mua hàng</a>
                         </li>
-                        <!-- <li class="my-account__item <?php if($tab == 'account_settings') { echo 'active';} ?>">
-                            <a href="index.php?page=my_account&tab=account_settings" class="">Cài đặt tài khoản</a>
-                        </li> -->
+                        <li class="my-account__item <?php if($tab == 'account_order_cancel') { echo 'active';} ?>">
+                            <a href="index.php?page=my_account&tab=account_order_cancel" class="">Đơn hàng đã hủy</a>
+                        </li>
                         <!-- <li class="my-account__item">
                             <a href="index.php?logout=1" onclick="return confirm('Bạn có đăng xuất không?')"
                                 class="">Đăng xuất</a>
@@ -66,6 +66,9 @@ if (isset($_GET['logout']) && $_GET['logout'] == 1) {
                         }
                         elseif ($tab == 'account_settings') {
                             include("./site/view/account-settings.php");
+                        }
+                        elseif ($tab == 'account_order_cancel') {
+                            include("./site/view/account_order_cancel.php");
                         }
                         else {
                             include("./site/view/account-info.php");

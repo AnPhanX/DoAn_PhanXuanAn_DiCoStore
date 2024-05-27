@@ -1,10 +1,10 @@
 <?php
 $account_id = $_SESSION['account_id'];
-$sql_order_list = "SELECT * FROM orders JOIN account ON orders.account_id = account.account_id WHERE (orders.order_status < 0 OR orders.order_status >= 3) AND account.account_id = $account_id ORDER BY orders.order_id DESC";
+$sql_order_list = "SELECT * FROM orders JOIN account ON orders.account_id = account.account_id WHERE ( orders.order_status >= 3) AND account.account_id = $account_id ORDER BY orders.order_id DESC";
 $query_order_list = mysqli_query($mysqli, $sql_order_list);
 ?>
 <div class="my-account__content">
-    <h2 class="my-account__title h3">Danh sách đơn hàng</h2>
+    <!-- <h2 class="my-account__title h3">Danh sách đơn hàng</h2> -->
     <div class="order__items">
         <?php while ($order = mysqli_fetch_array($query_order_list)) {
         ?>
@@ -13,8 +13,9 @@ $query_order_list = mysqli_query($mysqli, $sql_order_list);
                     <div class="order__header d-flex align-center space-between">
                         <div class="order__info">
                             <h5 class="order__code">#<?php echo $order['order_code'] ?></h5>
-                            <span class="h6"><?php echo $order['order_date'] ?></span>
+                            
                         </div>
+                        <span class="h6"><?php echo $order['order_date'] ?></span>
                         <span class="order__status h6"><?php echo format_order_status($order['order_status']) ?></span>
                     </div>
                     <div class="order__container">
@@ -32,7 +33,7 @@ $query_order_list = mysqli_query($mysqli, $sql_order_list);
                                     <span class="h6 d-block">
                                         Loại:
                                         <?php
-                                        $sql_variant = "SELECT * FROM product_variant WHERE product_id = '" . $order_detail['product_id'] . "' AND variant_id = '" . $order_detail['variant_id'] . "' LIMIT 1";
+                                        $sql_variant = "SELECT * FROM product_size WHERE product_id = '" . $order_detail['product_id'] . "' AND variant_id = '" . $order_detail['variant_id'] . "' LIMIT 1";
                                         $query_variant = mysqli_query($mysqli, $sql_variant);
                                         while ($variant = mysqli_fetch_array($query_variant)) {
                                             echo $variant['variant_name'];

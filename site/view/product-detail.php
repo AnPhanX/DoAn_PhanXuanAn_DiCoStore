@@ -266,7 +266,7 @@ while ($row_product_detail = mysqli_fetch_array($query_product_detail)) {
                     <form class="post-comment" method="POST"
                         action="site/handle/evaluate_rating.php?product_id=<?php echo $product_id; ?>">
                         <div class="product-rate d-flex align-center">
-                            <div class="rate-text h5"> Đánh giá</div>
+                            <div class="rate-text h5"></div>
                             <div class="rate-box">
                                 <input name="rate" type="radio" value="1">
                                 <input name="rate" type="radio" value="2">
@@ -274,7 +274,7 @@ while ($row_product_detail = mysqli_fetch_array($query_product_detail)) {
                                 <input name="rate" type="radio" value="4">
                                 <input name="rate" type="radio" value="5" checked>
                             </div>
-                            <div class="rate-text h5">cho sản phẩm này:</div>
+                            <div class="rate-text h5"></div>
                         </div>
 
                         <div class="form-element mg-t-20">
@@ -424,7 +424,7 @@ while ($row_product_detail = mysqli_fetch_array($query_product_detail)) {
                 </div>
                 <div class="evaluate__footer">
                     <div class="load-more-box p-relative d-flex align-center justify-center">
-                        <button class="LoadMore button" type="button"> Xem thêm </button>
+                        <!-- <button class="LoadMore button" type="button"> Xem thêm </button> -->
                     </div>
                 </div>
             </div>

@@ -21,14 +21,14 @@ error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
             <div class="cart__heading">
                 <div class="cart__item d-grid">
                     <div class="cart__image">
-                        <span class="h6">TÊN SẢN PHẨM</span>
+                        <span class="h6"><b>SẢN PHẨM</b></span>
                     </div>
                     <div class="cart__title"></div>
                     <div class="cart__quantity">
-                        <span class="d-none lg-initital">Số lượng</span>
+                        <span class=" h6 lg-initital pd-l-30"><b>SỐ LƯỢNG</b></span>
                     </div>
                     <div class="cart__total">
-                        <span class="h6">GIÁ TIỀN</span>
+                        <span class="h6"><b>GIÁ TIỀN</b></span>
                     </div>
                 </div>
             </div>
@@ -162,7 +162,7 @@ error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
         </div>
         <div class="cart__footer w-100 h-100">
             <div class="cart__footer--total h4">
-                Tổng tiền: <?php echo number_format((float) $total) . '₫' ?>
+                TỔNG TIỀN: <?php echo number_format((float) $total) . '₫' ?>
             </div>
             <!-- <p class="cart__footer--context">
                     Thuế và phí vận chuyển được tính khi thanh toán
